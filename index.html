@@ -3,622 +3,857 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orca Alert — Salish Sea Whale Notifications</title>
+<title>Lynell Cunningham — Product Manager</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
   :root {
-    --ink: #0d1f1e;
-    --ink-soft: #3d5554;
-    --ink-muted: #7a9997;
-    --bg: #f4f9f8;
-    --bg-deep: #0d2b28;
-    --surface: #ffffff;
-    --teal: #1D9E75;
-    --teal-light: #E1F5EE;
-    --teal-mid: #5DCAA5;
-    --teal-dark: #085041;
-    --amber: #BA7517;
-    --amber-light: #FAEEDA;
-    --coral: #993C1D;
-    --coral-light: #FAECE7;
-    --border: rgba(13,31,30,0.1);
-    --r: 14px;
+    --ink: #1a1a2e;
+    --ink-soft: #4a4a6a;
+    --ink-muted: #8888aa;
+    --bg: #faf8f5;
+    --bg-warm: #f3efe8;
+    --bg-card: #ffffff;
+    --accent: #2d7a6e;
+    --accent-light: #e8f4f2;
+    --accent-warm: #c8845a;
+    --border: rgba(26,26,46,0.1);
+    --radius: 16px;
   }
+
   html { scroll-behavior: smooth; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 1rem 2.5rem;
-    background: rgba(13,43,40,0.95);
+    padding: 1.25rem 3rem;
+    background: rgba(250,248,245,0.85);
     backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
   }
-  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .nav-brand span { font-family: 'Lora', serif; font-size: 1.1rem; color: #fff; font-weight: 500; }
-  .nav-pill {
-    background: rgba(93,202,165,0.15); color: var(--teal-mid);
-    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 4px 10px; border-radius: 100px; border: 1px solid rgba(93,202,165,0.3);
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--ink);
+    text-decoration: none;
   }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--ink-soft);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
 
   /* HERO */
   .hero {
-    min-height: 100vh; display: flex; align-items: center;
-    padding: 7rem 2.5rem 4rem;
-    background: linear-gradient(160deg, var(--bg-deep) 0%, #143530 60%, #1a4a43 100%);
-    position: relative; overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
   }
-  .hero-waves {
-    position: absolute; bottom: 0; left: 0; right: 0; height: 200px; opacity: 0.12;
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 80% 40%, rgba(45,122,110,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(200,132,90,0.05) 0%, transparent 60%);
   }
-  .hero-glow {
-    position: absolute; width: 600px; height: 600px;
-    border-radius: 50%; background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%);
-    right: -100px; top: 50%; transform: translateY(-50%);
-    pointer-events: none;
+  .hero-orca {
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.06;
+    font-size: 28rem;
+    line-height: 1;
+    user-select: none;
+    z-index: 0;
   }
-  .hero-inner { max-width: 580px; position: relative; z-index: 2; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(93,202,165,0.12); border: 1px solid rgba(93,202,165,0.25);
-    color: var(--teal-mid); padding: 6px 14px; border-radius: 100px;
-    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+  .hero-inner { position: relative; z-index: 1; max-width: 680px; }
+  .hero-eyebrow {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1.5px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--ink);
     margin-bottom: 1.5rem;
   }
-  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-mid); animation: pulse-dot 2s ease-in-out infinite; }
-  @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.7); } }
-  .hero h1 {
-    font-family: 'Lora', serif;
-    font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 500; color: #fff; line-height: 1.15;
-    letter-spacing: -0.02em; margin-bottom: 1.25rem;
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
   }
-  .hero h1 em { font-style: italic; color: var(--teal-mid); }
-  .hero p { font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.75; font-weight: 300; margin-bottom: 2.5rem; }
-
-  /* SIGNUP FORM */
-  .signup-form {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-    border-radius: var(--r); padding: 1.75rem; max-width: 480px;
+  .hero-sub {
+    font-size: 1.125rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
   }
-  .form-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; display: block; }
-  .form-row { margin-bottom: 1rem; }
-  .form-input {
-    width: 100%; padding: 0.75rem 1rem;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-    outline: none; transition: border-color 0.2s;
-  }
-  .form-input::placeholder { color: rgba(255,255,255,0.3); }
-  .form-input:focus { border-color: var(--teal-mid); }
-  .form-hint { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 5px; }
-  .btn-signup {
-    width: 100%; padding: 0.875rem;
-    background: var(--teal); color: #fff;
-    border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem; font-weight: 500; cursor: pointer;
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.875rem 1.75rem;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
     transition: background 0.2s, transform 0.15s;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .btn-signup:hover { background: #1D9E75cc; transform: translateY(-1px); }
-  .btn-signup:active { transform: scale(0.99); }
-  .form-disclaimer { font-size: 0.7rem; color: rgba(255,255,255,0.3); text-align: center; margin-top: 0.75rem; line-height: 1.5; }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.875rem 1.75rem;
+    border: 1.5px solid var(--border);
+    color: var(--ink);
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+    transition: border-color 0.2s, color 0.2s, transform 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
-  /* SUCCESS STATE */
-  .success-state {
-    display: none;
-    background: rgba(29,158,117,0.12); border: 1px solid rgba(93,202,165,0.3);
-    border-radius: var(--r); padding: 1.75rem; text-align: center;
+  /* SECTIONS */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.75rem;
   }
-  .success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-  .success-state h3 { font-family: 'Lora', serif; color: #fff; font-size: 1.3rem; margin-bottom: 0.5rem; }
-  .success-state p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; }
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  .section-intro {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 540px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .section-header { margin-bottom: 3.5rem; }
 
-  /* LIVE SIGHTINGS */
-  .sightings-section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
-  .section-eyebrow {
-    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--teal); margin-bottom: 0.5rem;
-    display: flex; align-items: center; gap: 8px;
+  /* ABOUT */
+  .about { background: var(--bg); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
   }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse-dot 1.5s ease-in-out infinite; }
-  .section-title { font-family: 'Lora', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.015em; }
-  .section-sub { font-size: 0.95rem; color: var(--ink-soft); font-weight: 300; margin-bottom: 2rem; }
-
-  /* FILTER BAR */
-  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
-  .filter-label { font-size: 0.8rem; color: var(--ink-muted); }
-  .filter-btn {
-    padding: 5px 14px; border-radius: 100px; border: 1px solid var(--border);
-    background: var(--surface); font-size: 0.8rem; color: var(--ink-soft);
-    cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+  .about-text p {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
   }
-  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
-  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
-
-  /* SIGHTING CARDS */
-  .sightings-grid { display: flex; flex-direction: column; gap: 10px; }
-  .sighting-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--r); padding: 1.25rem 1.5rem;
-    display: grid; grid-template-columns: auto 1fr auto;
-    gap: 1rem; align-items: start;
-    transition: box-shadow 0.2s;
-    animation: slideIn 0.4s ease both;
+  .about-text p strong { color: var(--ink); font-weight: 500; }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
-  @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-  .sighting-card:hover { box-shadow: 0 4px 20px rgba(13,31,30,0.07); }
-  .sighting-species-badge {
-    width: 44px; height: 44px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; flex-shrink: 0;
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
   }
-  .species-orca { background: #E1F5EE; }
-  .species-humpback { background: #E6F1FB; }
-  .species-gray { background: #FAEEDA; }
-  .species-minke { background: #FBEAF0; }
-  .species-other { background: #F1EFE8; }
-  .sighting-body {}
-  .sighting-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
-  .sighting-species { font-weight: 500; font-size: 0.95rem; color: var(--ink); }
-  .species-tag {
-    font-size: 0.7rem; padding: 2px 8px; border-radius: 100px; font-weight: 500;
+  .stat-number {
+    font-family: 'Lora', serif;
+    font-size: 2.25rem;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.4rem;
   }
-  .tag-orca { background: var(--teal-light); color: var(--teal-dark); }
-  .tag-humpback { background: #E6F1FB; color: #0C447C; }
-  .tag-gray { background: var(--amber-light); color: #633806; }
-  .tag-minke { background: #FBEAF0; color: #72243E; }
-  .tag-other { background: #F1EFE8; color: #444441; }
-  .sighting-location { font-size: 0.875rem; color: var(--ink-soft); margin-bottom: 4px; }
-  .sighting-desc { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.5; font-weight: 300; }
-  .sighting-meta { text-align: right; flex-shrink: 0; }
-  .sighting-time { font-size: 0.8rem; color: var(--ink-muted); white-space: nowrap; }
-  .sighting-coords { font-size: 0.7rem; color: var(--ink-muted); font-family: monospace; margin-top: 3px; }
-  .proximity-badge {
-    display: inline-block; margin-top: 6px;
-    font-size: 0.7rem; font-weight: 500; padding: 3px 8px; border-radius: 100px;
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-weight: 400;
   }
-  .prox-near { background: #FAECE7; color: var(--coral); }
-  .prox-close { background: var(--amber-light); color: var(--amber); }
-  .prox-far { background: var(--teal-light); color: var(--teal-dark); }
-
-  /* LOADING / EMPTY */
-  .loading-state { text-align: center; padding: 3rem; color: var(--ink-muted); }
-  .spinner {
-    width: 32px; height: 32px; border-radius: 50%;
-    border: 2.5px solid var(--teal-light); border-top-color: var(--teal);
-    animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+  .about-domains {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .empty-state { text-align: center; padding: 3rem; }
-  .empty-state p { color: var(--ink-muted); font-size: 0.9rem; }
-
-  /* DEMO ALERT */
-  .demo-alert {
-    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
-    background: var(--ink); color: #fff;
-    border-radius: var(--r); padding: 1rem 1.25rem; max-width: 300px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    transform: translateY(120px); opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
-  }
-  .demo-alert.show { transform: translateY(0); opacity: 1; }
-  .demo-alert-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .demo-alert-icon { font-size: 1.2rem; }
-  .demo-alert-title { font-size: 0.8rem; font-weight: 500; color: var(--teal-mid); }
-  .demo-alert p { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
-  .demo-alert-close {
-    position: absolute; top: 10px; right: 10px;
-    background: none; border: none; color: rgba(255,255,255,0.4);
-    cursor: pointer; font-size: 1rem; padding: 2px 6px;
+  .domain-tag {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.01em;
   }
 
-  /* HOW IT WORKS */
-  .how-section { background: var(--bg-deep); padding: 5rem 2.5rem; }
-  .how-inner { max-width: 900px; margin: 0 auto; }
-  .how-section .section-title { color: #fff; }
-  .how-section .section-sub { color: rgba(255,255,255,0.5); }
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
-  .step {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: var(--r); padding: 1.5rem;
+  /* SKILLS / APPROACH */
+  .approach { background: var(--bg-warm); }
+  .approach-inner { max-width: 1100px; margin: 0 auto; }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
   }
-  .step-num { font-family: 'Lora', serif; font-size: 2rem; font-style: italic; color: var(--teal-mid); opacity: 0.5; margin-bottom: 0.75rem; }
-  .step h4 { font-size: 0.95rem; font-weight: 500; color: #fff; margin-bottom: 0.4rem; }
-  .step p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; font-weight: 300; }
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .skill-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,26,46,0.08); }
+  .skill-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .skill-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+  .skill-card p {
+    font-size: 0.875rem;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+    transform-origin: left;
+  }
+  .skill-card:hover::after { transform: scaleX(1); }
+
+  /* PROJECT - ORCA */
+  .project { background: var(--bg); }
+  .project-inner { max-width: 1100px; margin: 0 auto; }
+  .project-card {
+    background: var(--ink);
+    border-radius: 24px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .project-content {
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .project-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(45,122,110,0.3);
+    color: #7ed6c8;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+  }
+  .project-content h2 {
+    font-family: 'Lora', serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  .project-content p {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .project-meta {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .project-meta-item {}
+  .project-meta-item .meta-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 4px;
+  }
+  .project-meta-item .meta-value {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+  .project-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.875rem 1.5rem;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    width: fit-content;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .project-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .project-visual {
+    background: linear-gradient(135deg, #0d2b28 0%, #1a4a43 50%, #0d2b28 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 380px;
+  }
+  .orca-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wave {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    opacity: 0.15;
+  }
+  .orca-emoji {
+    font-size: 6rem;
+    animation: bob 4s ease-in-out infinite;
+    z-index: 2;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+  }
+  .ping-rings {
+    position: absolute;
+    width: 200px; height: 200px;
+  }
+  .ping-ring {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid rgba(45,122,110,0.4);
+    border-radius: 50%;
+    animation: ping 3s ease-out infinite;
+  }
+  .ping-ring:nth-child(2) { animation-delay: 1s; }
+  .ping-ring:nth-child(3) { animation-delay: 2s; }
+  .alert-pill {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(45,122,110,0.9);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 100px;
+    white-space: nowrap;
+    animation: pulse-pill 2s ease-in-out infinite;
+    z-index: 3;
+  }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes ping { 0% { transform: scale(0.5); opacity: 0.6; } 100% { transform: scale(2); opacity: 0; } }
+  @keyframes pulse-pill { 0%,100% { opacity: 1; } 50% { opacity: 0.75; } }
+
+  /* PHILOSOPHY */
+  .philosophy { background: var(--bg-warm); }
+  .philosophy-inner { max-width: 780px; margin: 0 auto; }
+  .philosophy-list { list-style: none; display: flex; flex-direction: column; gap: 1px; }
+  .philosophy-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .philosophy-item:last-child { border-bottom: none; }
+  .philosophy-num {
+    font-family: 'Lora', serif;
+    font-size: 0.875rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    min-width: 28px;
+    margin-top: 2px;
+  }
+  .philosophy-text h3 {
+    font-family: 'Lora', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .philosophy-text p {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--ink); }
+  .contact-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact .section-label { color: rgba(255,255,255,0.4); }
+  .contact .section-title { color: #fff; }
+  .contact p {
+    color: rgba(255,255,255,0.6);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 0.875rem 1.75rem;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: #fff; background: rgba(45,122,110,0.2); }
+  .contact-link.primary-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .contact-link.primary-link:hover { background: #238a7c; border-color: #238a7c; }
 
   /* FOOTER */
   footer {
-    background: var(--bg-deep); border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 1.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
-  footer a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; }
-  footer a:hover { color: var(--teal-mid); }
 
-  /* DEMO MODE BANNER */
-  .demo-banner {
-    background: var(--amber-light); border-bottom: 1px solid rgba(186,117,23,0.2);
-    padding: 8px 2.5rem; display: flex; align-items: center; gap: 8px;
-    font-size: 0.8rem; color: var(--amber);
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
   }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  @media (max-width: 600px) {
-    nav { padding: 1rem 1.25rem; }
-    .hero { padding: 6rem 1.25rem 3rem; }
-    .sightings-section { padding: 3rem 1.25rem; }
-    .how-section { padding: 3rem 1.25rem; }
-    .sighting-card { grid-template-columns: auto 1fr; }
-    .sighting-meta { grid-column: 2; }
-    footer { flex-direction: column; }
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .project-card { grid-template-columns: 1fr; }
+    .project-visual { min-height: 260px; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
   }
 </style>
 </head>
 <body>
 
-<!-- DEMO BANNER -->
-<div class="demo-banner" style="margin-top:0; position:fixed; top:0; left:0; right:0; z-index:99;">
-  ⚗️ <strong>Prototype demo</strong> — sightings data is live from The Whale Museum's public API. SMS alerts are simulated.
-</div>
-
-<nav style="top: 34px;">
-  <a href="#" class="nav-brand">
-    <span>🐋 Orca Alert</span>
-  </a>
-  <div class="nav-pill">Salish Sea</div>
+<nav>
+  <a href="#" class="nav-logo">Lynell Cunningham</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero" style="padding-top: 8rem;">
-  <div class="hero-glow"></div>
-  <svg class="hero-waves" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,100 C180,160 360,40 540,100 C720,160 900,40 1080,100 C1260,160 1380,80 1440,100 L1440,200 L0,200 Z" fill="white"/>
-    <path d="M0,140 C200,80 400,180 600,140 C800,100 1000,180 1200,140 C1320,120 1400,150 1440,140 L1440,200 L0,200 Z" fill="white" opacity="0.5"/>
-  </svg>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orca" aria-hidden="true">🐋</div>
   <div class="hero-inner">
-    <div class="hero-badge">
-      <span class="badge-dot"></span>
-      Whale watch alerts — Salish Sea
-    </div>
-    <h1>Know when the <em>orcas</em> are near.</h1>
-    <p>Get a text message the moment whales are spotted within 5 miles of you in the Salish Sea. Powered by real-time community sightings — rebuilt after the original service went offline.</p>
-
-    <!-- SIGNUP FORM -->
-    <div id="signup-form" class="signup-form">
-      <div class="form-row">
-        <label class="form-label" for="phone">Your phone number</label>
-        <input class="form-input" type="tel" id="phone" placeholder="+1 (206) 555-0100" autocomplete="tel">
-        <div class="form-hint">US numbers only for now. Standard SMS rates apply.</div>
-      </div>
-      <div class="form-row">
-        <label class="form-label" for="zipcode">Your zip code</label>
-        <input class="form-input" type="text" id="zipcode" placeholder="98115" maxlength="5" autocomplete="postal-code">
-        <div class="form-hint">We'll alert you when whales are within ~5 miles of this location.</div>
-      </div>
-      <button class="btn-signup" onclick="handleSignup()">
-        🐋 Sign me up for whale alerts
-      </button>
-      <p class="form-disclaimer">No spam. Only whale alerts. Unsubscribe any time by replying STOP.</p>
-    </div>
-
-    <!-- SUCCESS STATE -->
-    <div id="success-state" class="success-state">
-      <div class="success-icon">🎉</div>
-      <h3>You're on the list!</h3>
-      <p>We'll text you the moment orcas or other whales are spotted near <span id="success-zip"></span>. Keep an eye out — they could show up any day.</p>
+    <div class="hero-eyebrow">Product Manager</div>
+    <h1>Hi, I'm Lynell.<br>I build things that <em>matter.</em></h1>
+    <p class="hero-sub">
+      I'm a product manager with deep roots in eCommerce and supply chain — now focused on B2B SaaS. I help teams cut through complexity, ship with purpose, and measure what actually moves the needle.
+    </p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">See my work →</a>
+      <a href="#contact" class="btn-secondary">Let's talk</a>
     </div>
   </div>
 </section>
 
-<!-- LIVE SIGHTINGS -->
-<section class="sightings-section">
-  <div class="section-eyebrow"><span class="live-dot"></span> Live from The Whale Museum</div>
-  <h2 class="section-title">Recent sightings</h2>
-  <p class="section-sub">Confirmed sightings in the Salish Sea region, updated continuously. Enter your zip above to see proximity alerts.</p>
-
-  <div class="filter-bar">
-    <span class="filter-label">Filter:</span>
-    <button class="filter-btn active" onclick="filterSightings('all', this)">All species</button>
-    <button class="filter-btn" onclick="filterSightings('orca', this)">Orca</button>
-    <button class="filter-btn" onclick="filterSightings('humpback', this)">Humpback</button>
-    <button class="filter-btn" onclick="filterSightings('gray whale', this)">Gray whale</button>
-  </div>
-
-  <div id="sightings-container">
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Loading recent sightings...</p>
+<section class="about" id="about">
+  <div class="about-grid fade-up">
+    <div class="about-text">
+      <div class="section-label">About me</div>
+      <h2 class="section-title">Operator first,<br>strategist always.</h2>
+      <p>
+        My background is in the guts of commerce — <strong>eCommerce operations and supply chain</strong> — where product decisions have real, immediate consequences. That experience gave me a deep appreciation for systems thinking, stakeholder complexity, and what "done" actually looks like.
+      </p>
+      <p>
+        Now I'm bringing that operational clarity to <strong>B2B SaaS</strong> — where I'm most energized by products that remove friction, create leverage for business users, and quietly become indispensable.
+      </p>
+      <p>
+        When I'm not thinking about products, I'm probably thinking about the Pacific Northwest, orcas, and why good systems break — and how to fix them.
+      </p>
+      <div class="about-domains">
+        <span class="domain-tag">eCommerce</span>
+        <span class="domain-tag">Supply Chain</span>
+        <span class="domain-tag">B2B SaaS</span>
+        <span class="domain-tag">Systems Thinking</span>
+        <span class="domain-tag">Discovery</span>
+        <span class="domain-tag">Roadmap Strategy</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">eComm</div>
+        <div class="stat-label">Domain depth in commerce & logistics</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">B2B</div>
+        <div class="stat-label">Current focus: SaaS for business users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Ship</div>
+        <div class="stat-label">Bias toward learning by doing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">Why</div>
+        <div class="stat-label">Always starts with the user's real problem</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section">
-  <div class="how-inner">
-    <div class="section-eyebrow" style="color: var(--teal-mid);">How it works</div>
-    <h2 class="section-title">Simple, real, and free.</h2>
-    <p class="section-sub">Built on top of The Whale Museum's community sighting network — thousands of volunteers, researchers, and ferry crews reporting from the water.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h4>You sign up</h4>
-        <p>Enter your phone number and zip code. We convert your zip to lat/lon coordinates.</p>
+<section class="approach" id="approach">
+  <div class="approach-inner">
+    <div class="section-header fade-up">
+      <div class="section-label">How I work</div>
+      <h2 class="section-title">My PM approach</h2>
+      <p class="section-intro">I don't believe in one-size-fits-all frameworks. But there are a few principles I bring to every team and product.</p>
+    </div>
+    <div class="skills-grid fade-up">
+      <div class="skill-card">
+        <div class="skill-icon">🎯</div>
+        <h3>Ruthless prioritization</h3>
+        <p>If everything is a priority, nothing is. I help teams make hard calls with clear criteria — and I'm comfortable being the one to say no.</p>
       </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h4>Whales are spotted</h4>
-        <p>Community members report sightings via The Whale Museum. Reports are verified and geotagged.</p>
+      <div class="skill-card">
+        <div class="skill-icon">🔍</div>
+        <h3>Discovery before solutions</h3>
+        <p>I run structured user research to surface surprises, not confirmations. The best product decisions come from what users do, not what they say they'd buy.</p>
       </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h4>We calculate distance</h4>
-        <p>We check if the sighting is within 5 miles of your zip — laterally along the same latitude band.</p>
+      <div class="skill-card">
+        <div class="skill-icon">📐</div>
+        <h3>Systems thinking</h3>
+        <p>My supply chain background means I see products as systems — with upstream dependencies, feedback loops, and failure modes most PMs miss.</p>
       </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h4>You get a text</h4>
-        <p>Instant SMS with species, location, and direction of travel. No app needed.</p>
+      <div class="skill-card">
+        <div class="skill-icon">📝</div>
+        <h3>Writing that creates alignment</h3>
+        <p>My PRDs don't need a meeting to explain them. I write to create shared understanding — not to document decisions after they've already been made.</p>
       </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <h3>Outcome-based measurement</h3>
+        <p>I measure success by what changes for the user, not by what shipped. Every initiative gets a clear outcome statement before it starts.</p>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🤝</div>
+        <h3>Influence without authority</h3>
+        <p>PMs have no direct reports but are accountable for everything. I build trust through consistency and adapt my framing to what each stakeholder actually cares about.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="project" id="work">
+  <div class="project-inner">
+    <div class="section-header fade-up">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">Building things I care about.</h2>
+      <p class="section-intro">The best way to show how you think is to ship something real — even if it's small.</p>
+    </div>
+
+    <!-- Project 1: Orca Alert -->
+    <div class="project-card fade-up" style="margin-bottom: 1.5rem;">
+      <div class="project-content">
+        <div class="project-tag">
+          <span>🐋</span> Civic tech · In development
+        </div>
+        <h2>Orca Alert — Salish Sea Whale Notifications</h2>
+        <p>
+          The Orca Network once offered a text alert when orcas entered the Salish Sea. That service went down — and new subscribers can no longer sign up. I'm rebuilding it: a simple, reliable SMS notification system so anyone in the Pacific Northwest can know when the whales are near.
+        </p>
+        <div class="project-meta">
+          <div class="project-meta-item">
+            <div class="meta-label">Problem</div>
+            <div class="meta-value">Service offline, no new signups</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">Solution</div>
+            <div class="meta-value">SMS alert system, rebuilt</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">Stack</div>
+            <div class="meta-value">Node.js · Whale Museum API</div>
+          </div>
+        </div>
+        <a href="#contact" class="project-btn">Follow the build →</a>
+      </div>
+      <div class="project-visual">
+        <div class="orca-scene">
+          <div class="ping-rings">
+            <div class="ping-ring"></div>
+            <div class="ping-ring"></div>
+            <div class="ping-ring"></div>
+          </div>
+          <div class="orca-emoji" role="img" aria-label="Orca whale">🐋</div>
+          <div class="alert-pill">📱 Orca spotted in the Salish Sea!</div>
+        </div>
+        <svg class="wave" viewBox="0 0 400 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,60 C100,20 200,100 300,60 C350,40 380,80 400,60 L400,120 L0,120 Z" fill="white"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Project 2: Salish Sea Restoration Calendar -->
+    <div class="fade-up" style="
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    ">
+      <div class="project-content" style="background: #fff; padding: 3.5rem;">
+        <div class="project-tag" style="background: rgba(200,132,90,0.12); color: var(--accent-warm); border: 1px solid rgba(200,132,90,0.25);">
+          <span>🌿</span> Community tool · Live · 5+ active users
+        </div>
+        <h2 style="color: var(--ink);">Salish Sea Restoration Calendar</h2>
+        <p style="color: var(--ink-soft);">
+          Salmon habitat restoration, shoreline outreach, and community events in the Salish Sea region are scattered across dozens of organizations with no central resource. I built and maintain a shared calendar that consolidates them — adopted organically by local whale watch communities with no promotion.
+        </p>
+        <div class="project-meta">
+          <div class="project-meta-item">
+            <div class="meta-label" style="color: var(--ink-muted);">Problem</div>
+            <div class="meta-value" style="color: var(--ink-soft);">No central event resource</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label" style="color: var(--ink-muted);">Users</div>
+            <div class="meta-value" style="color: var(--ink-soft);">5+ active, word-of-mouth growth</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label" style="color: var(--ink-muted);">Tool</div>
+            <div class="meta-value" style="color: var(--ink-soft);">Google Calendar (shared)</div>
+          </div>
+        </div>
+        <a href="https://calendar.google.com/calendar/u/1?cid=MGM5NzU0NDk2NTllNGYxODZkNDQzYWYzOThjMGI1ZWY1M2EzMjA0YmFmM2NjM2ViZDQ0Zjc2OTQ4NTc3YmFhNEBncm91cC5jYWxlbmRhci5nb29nbGUuY29t" target="_blank" class="project-btn" style="background: var(--accent-warm);">View the calendar →</a>
+      </div>
+      <div style="
+        background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 50%, #2c1810 100%);
+        display: flex; align-items: center; justify-content: center;
+        position: relative; overflow: hidden; min-height: 340px;
+        padding: 2rem;
+      ">
+        <!-- Calendar grid visual -->
+        <div style="position: relative; z-index: 2; width: 100%;">
+          <div style="
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 280px;
+            margin: 0 auto;
+          ">
+            <!-- Calendar header -->
+            <div style="background: rgba(200,132,90,0.3); padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between;">
+              <span style="color: #fff; font-size: 0.8rem; font-weight: 500; font-family: 'DM Sans', sans-serif;">🌿 Salish Sea Restoration</span>
+            </div>
+            <!-- Calendar rows -->
+            <div style="padding: 0.75rem;">
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 6px;">
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">S</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">M</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">T</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">W</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">T</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">F</div>
+                <div style="font-size: 0.6rem; color: rgba(255,255,255,0.35); text-align: center; font-family: 'DM Sans', sans-serif;">S</div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px;">
+                <div style="height:22px; border-radius:4px;"></div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">1</div>
+                <div style="height:22px; border-radius:4px; background:rgba(200,132,90,0.4); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:#fff; font-family:'DM Sans',sans-serif;">2</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">3</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">4</div>
+                <div style="height:22px; border-radius:4px; background:rgba(45,122,110,0.5); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:#fff; font-family:'DM Sans',sans-serif;">5</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">6</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">7</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">8</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">9</div>
+                <div style="height:22px; border-radius:4px; background:rgba(200,132,90,0.4); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:#fff; font-family:'DM Sans',sans-serif;">10</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">11</div>
+                <div style="height:22px; border-radius:4px; background:rgba(45,122,110,0.5); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:#fff; font-family:'DM Sans',sans-serif;">12</div>
+                <div style="height:22px; border-radius:4px; background:rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; font-size:0.6rem; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;">13</div>
+              </div>
+            </div>
+            <!-- Event pills -->
+            <div style="padding: 0 0.75rem 0.75rem; display: flex; flex-direction: column; gap: 5px;">
+              <div style="background: rgba(200,132,90,0.25); border-radius: 6px; padding: 5px 8px; font-size: 0.65rem; color: rgba(255,255,255,0.8); font-family: 'DM Sans', sans-serif;">🐟 Salmon habitat planting — Nisqually</div>
+              <div style="background: rgba(45,122,110,0.25); border-radius: 6px; padding: 5px 8px; font-size: 0.65rem; color: rgba(255,255,255,0.8); font-family: 'DM Sans', sans-serif;">🌿 Shoreline outreach — Whidbey Island</div>
+              <div style="background: rgba(200,132,90,0.25); border-radius: 6px; padding: 5px 8px; font-size: 0.65rem; color: rgba(255,255,255,0.8); font-family: 'DM Sans', sans-serif;">👥 Community cleanup — Puget Sound</div>
+            </div>
+          </div>
+        </div>
+        <!-- Background decoration -->
+        <div style="position:absolute; inset:0; opacity:0.04; background: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="philosophy">
+  <div class="philosophy-inner fade-up">
+    <div class="section-header">
+      <div class="section-label">How I think</div>
+      <h2 class="section-title">A few things I believe about product</h2>
+    </div>
+    <ul class="philosophy-list">
+      <li class="philosophy-item">
+        <span class="philosophy-num">01.</span>
+        <div class="philosophy-text">
+          <h3>Shipping is a hypothesis, not a conclusion.</h3>
+          <p>Launching is when the learning starts. I treat every release as an experiment and keep a tight feedback loop to know whether we got it right.</p>
+        </div>
+      </li>
+      <li class="philosophy-item">
+        <span class="philosophy-num">02.</span>
+        <div class="philosophy-text">
+          <h3>The best product decisions are also good writing.</h3>
+          <p>If you can't explain a tradeoff clearly in a doc, you probably don't understand it well enough to make it. Writing forces clarity.</p>
+        </div>
+      </li>
+      <li class="philosophy-item">
+        <span class="philosophy-num">03.</span>
+        <div class="philosophy-text">
+          <h3>Constraints are a feature, not a bug.</h3>
+          <p>Supply chain taught me that limited time, money, and capacity force creative prioritization. I bring that discipline to software.</p>
+        </div>
+      </li>
+      <li class="philosophy-item">
+        <span class="philosophy-num">04.</span>
+        <div class="philosophy-text">
+          <h3>Care about the problem, not your solution to it.</h3>
+          <p>The most dangerous PM in any room is one who's fallen in love with their roadmap. I stay attached to the user's outcome, not my answer.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner fade-up">
+    <div class="section-label">Get in touch</div>
+    <h2 class="section-title">Let's build something worth building.</h2>
+    <p>I'm open to PM roles in B2B SaaS — especially teams working on operational complexity, commerce, or logistics tech. I'd love to hear about what you're building.</p>
+    <div class="contact-links">
+      <a href="mailto:lynell@example.com" class="contact-link primary-link">✉️ Send an email</a>
+      <a href="https://linkedin.com/in/lynellcunningham" class="contact-link" target="_blank">LinkedIn</a>
+      <a href="#work" class="contact-link">Follow the Orca project</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <p>🐋 Orca Alert — A project by Lynell Cunningham</p>
-  <div style="display:flex; gap:1.5rem;">
-    <a href="https://www.orcanetwork.org" target="_blank">Orca Network</a>
-    <a href="http://hotline.whalemuseum.org" target="_blank">The Whale Museum</a>
-    <a href="https://www.orcanetwork.org/report-sightings" target="_blank">Report a sighting</a>
-  </div>
-  <p>Sighting data © The Whale Museum</p>
+  <p>© 2026 Lynell Cunningham</p>
+  <p>Built with intention, not templates.</p>
 </footer>
 
-<!-- DEMO SMS ALERT -->
-<div class="demo-alert" id="demo-alert">
-  <button class="demo-alert-close" onclick="closeDemoAlert()">✕</button>
-  <div class="demo-alert-top">
-    <span class="demo-alert-icon">📱</span>
-    <span class="demo-alert-title">Demo SMS Alert</span>
-  </div>
-  <p id="demo-alert-text">🐋 ORCA ALERT: Orcas spotted 3.2 miles from your location near Point No Point. Northbound. — OrcaAlert.org</p>
-</div>
-
 <script>
-const SALISH_SEA_BOUNDS = { minLat: 47.5, maxLat: 49.0, minLon: -124.0, maxLon: -122.0 };
-let allSightings = [];
-let userZipCoords = null;
-let currentFilter = 'all';
-
-const SPECIES_CONFIG = {
-  'orca': { emoji: '🐋', badgeClass: 'species-orca', tagClass: 'tag-orca', label: 'Orca' },
-  'humpback': { emoji: '🐳', badgeClass: 'species-humpback', tagClass: 'tag-humpback', label: 'Humpback' },
-  'gray whale': { emoji: '🐬', badgeClass: 'species-gray', tagClass: 'tag-gray', label: 'Gray whale' },
-  'minke': { emoji: '🌊', badgeClass: 'species-minke', tagClass: 'tag-minke', label: 'Minke' },
-};
-
-function getSpeciesConfig(species) {
-  const s = (species || '').toLowerCase();
-  for (const [key, cfg] of Object.entries(SPECIES_CONFIG)) {
-    if (s.includes(key)) return { ...cfg, key };
-  }
-  return { emoji: '🌊', badgeClass: 'species-other', tagClass: 'tag-other', label: species || 'Marine mammal', key: 'other' };
-}
-
-function haversineDistance(lat1, lon1, lat2, lon2) {
-  const R = 3958.8;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-}
-
-function lateralDistance(userLat, sightingLat) {
-  return Math.abs(userLat - sightingLat) * 69;
-}
-
-function timeAgo(dateStr) {
-  const d = new Date(dateStr);
-  if (isNaN(d)) return 'Recently';
-  const diff = (Date.now() - d) / 1000;
-  if (diff < 3600) return `${Math.round(diff/60)}m ago`;
-  if (diff < 86400) return `${Math.round(diff/3600)}h ago`;
-  if (diff < 604800) return `${Math.round(diff/86400)}d ago`;
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-}
-
-function proximityBadge(dist) {
-  if (dist <= 5) return `<span class="proximity-badge prox-near">🔴 ${dist.toFixed(1)} mi — Alert zone</span>`;
-  if (dist <= 15) return `<span class="proximity-badge prox-close">🟡 ${dist.toFixed(1)} mi — Nearby</span>`;
-  return `<span class="proximity-badge prox-far">🟢 ${dist.toFixed(1)} mi</span>`;
-}
-
-function renderSightings(sightings) {
-  const container = document.getElementById('sightings-container');
-  const filtered = currentFilter === 'all'
-    ? sightings
-    : sightings.filter(s => (s.species || '').toLowerCase().includes(currentFilter));
-
-  if (filtered.length === 0) {
-    container.innerHTML = `<div class="empty-state"><p>No ${currentFilter === 'all' ? '' : currentFilter + ' '}sightings found in this region recently.</p></div>`;
-    return;
-  }
-
-  container.innerHTML = `<div class="sightings-grid">${filtered.map((s, i) => {
-    const cfg = getSpeciesConfig(s.species);
-    const lat = parseFloat(s.latitude);
-    const lon = parseFloat(s.longitude);
-    const hasCoords = !isNaN(lat) && !isNaN(lon);
-    let proxHtml = '';
-    if (userZipCoords && hasCoords) {
-      const latDist = lateralDistance(userZipCoords.lat, lat);
-      proxHtml = proximityBadge(latDist);
-      if (latDist <= 5 && i < 3) triggerDemoAlert(s, latDist);
-    }
-    return `
-    <div class="sighting-card" style="animation-delay: ${i * 50}ms">
-      <div class="sighting-species-badge ${cfg.badgeClass}">${cfg.emoji}</div>
-      <div class="sighting-body">
-        <div class="sighting-top">
-          <span class="sighting-species">${cfg.label}</span>
-          <span class="species-tag ${cfg.tagClass}">${s.species || 'Unknown'}</span>
-        </div>
-        <div class="sighting-location">📍 ${s.location || s.description?.substring(0,60) || 'Salish Sea region'}</div>
-        ${s.description ? `<div class="sighting-desc">${s.description.substring(0,120)}${s.description.length > 120 ? '…' : ''}</div>` : ''}
-        ${proxHtml}
-      </div>
-      <div class="sighting-meta">
-        <div class="sighting-time">${timeAgo(s.created_at || s.sighted_at)}</div>
-        ${hasCoords ? `<div class="sighting-coords">${lat.toFixed(3)}°N ${Math.abs(lon).toFixed(3)}°W</div>` : ''}
-      </div>
-    </div>`;
-  }).join('')}</div>`;
-}
-
-let demoAlertShown = false;
-function triggerDemoAlert(sighting, dist) {
-  if (demoAlertShown) return;
-  demoAlertShown = true;
-  const cfg = getSpeciesConfig(sighting.species);
-  const loc = sighting.location || 'the Salish Sea';
-  document.getElementById('demo-alert-text').textContent =
-    `${cfg.emoji} ORCA ALERT: ${cfg.label} spotted ${dist.toFixed(1)} mi from your location near ${loc}. — OrcaAlert.org`;
-  setTimeout(() => document.getElementById('demo-alert').classList.add('show'), 1500);
-  setTimeout(() => document.getElementById('demo-alert').classList.remove('show'), 8000);
-}
-
-function closeDemoAlert() {
-  document.getElementById('demo-alert').classList.remove('show');
-}
-
-async function fetchSightings() {
-  const container = document.getElementById('sightings-container');
-  try {
-    const params = new URLSearchParams({ species: 'orca,humpback,gray whale,minke', limit: 20, since: getSinceDate() });
-    const res = await fetch(`https://hotline.whalemuseum.org/api.json?${params}`);
-    if (!res.ok) throw new Error('API error');
-    const data = await res.json();
-    allSightings = data.filter(s => {
-      const lat = parseFloat(s.latitude);
-      const lon = parseFloat(s.longitude);
-      return !isNaN(lat) && !isNaN(lon)
-        && lat >= SALISH_SEA_BOUNDS.minLat && lat <= SALISH_SEA_BOUNDS.maxLat
-        && lon >= SALISH_SEA_BOUNDS.minLon && lon <= SALISH_SEA_BOUNDS.maxLon;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
     });
-    if (allSightings.length === 0) {
-      const res2 = await fetch('https://hotline.whalemuseum.org/api.json?limit=30');
-      const data2 = await res2.json();
-      allSightings = data2.slice(0, 20);
-    }
-    renderSightings(allSightings);
-  } catch(e) {
-    container.innerHTML = `<div class="empty-state"><p style="color:var(--ink-muted)">Couldn't reach The Whale Museum API right now. <a href="http://hotline.whalemuseum.org" target="_blank" style="color:var(--teal)">View sightings directly →</a></p></div>`;
-  }
-}
-
-function getSinceDate() {
-  const d = new Date();
-  d.setDate(d.getDate() - 30);
-  return d.toISOString().split('T')[0];
-}
-
-function filterSightings(species, btn) {
-  currentFilter = species;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderSightings(allSightings);
-}
-
-const ZIP_COORDS = {
-  '98101': { lat: 47.608, lon: -122.335 }, '98102': { lat: 47.632, lon: -122.321 },
-  '98103': { lat: 47.660, lon: -122.342 }, '98104': { lat: 47.603, lon: -122.330 },
-  '98105': { lat: 47.661, lon: -122.300 }, '98106': { lat: 47.545, lon: -122.357 },
-  '98107': { lat: 47.668, lon: -122.374 }, '98108': { lat: 47.546, lon: -122.307 },
-  '98109': { lat: 47.638, lon: -122.357 }, '98110': { lat: 47.631, lon: -122.523 },
-  '98111': { lat: 47.606, lon: -122.334 }, '98112': { lat: 47.633, lon: -122.294 },
-  '98113': { lat: 47.669, lon: -122.370 }, '98114': { lat: 47.606, lon: -122.334 },
-  '98115': { lat: 47.685, lon: -122.294 }, '98116': { lat: 47.572, lon: -122.393 },
-  '98117': { lat: 47.686, lon: -122.370 }, '98118': { lat: 47.549, lon: -122.277 },
-  '98119': { lat: 47.640, lon: -122.376 }, '98121': { lat: 47.615, lon: -122.347 },
-  '98122': { lat: 47.609, lon: -122.303 }, '98125': { lat: 47.716, lon: -122.304 },
-  '98126': { lat: 47.557, lon: -122.375 }, '98133': { lat: 47.732, lon: -122.347 },
-  '98134': { lat: 47.579, lon: -122.342 }, '98136': { lat: 47.540, lon: -122.389 },
-  '98144': { lat: 47.590, lon: -122.294 }, '98146': { lat: 47.511, lon: -122.364 },
-  '98155': { lat: 47.752, lon: -122.305 }, '98166': { lat: 47.450, lon: -122.348 },
-  '98177': { lat: 47.761, lon: -122.380 }, '98199': { lat: 47.650, lon: -122.399 },
-  '98225': { lat: 48.734, lon: -122.480 }, '98226': { lat: 48.762, lon: -122.439 },
-  '98229': { lat: 48.705, lon: -122.465 }, '98230': { lat: 48.985, lon: -122.738 },
-  '98232': { lat: 48.498, lon: -122.483 }, '98233': { lat: 48.524, lon: -122.337 },
-  '98236': { lat: 47.975, lon: -122.447 }, '98239': { lat: 48.246, lon: -122.697 },
-  '98240': { lat: 48.945, lon: -122.635 }, '98245': { lat: 48.637, lon: -122.962 },
-  '98250': { lat: 48.544, lon: -123.005 }, '98253': { lat: 47.975, lon: -122.447 },
-  '98257': { lat: 48.416, lon: -122.609 }, '98260': { lat: 47.993, lon: -122.362 },
-  '98261': { lat: 48.498, lon: -122.904 }, '98262': { lat: 48.715, lon: -122.595 },
-  '98263': { lat: 48.489, lon: -121.985 }, '98267': { lat: 48.502, lon: -121.177 },
-  '98270': { lat: 47.848, lon: -122.104 }, '98271': { lat: 48.057, lon: -122.153 },
-  '98273': { lat: 48.423, lon: -122.338 }, '98274': { lat: 48.456, lon: -122.303 },
-  '98275': { lat: 47.854, lon: -122.311 }, '98277': { lat: 48.326, lon: -122.653 },
-  '98278': { lat: 48.388, lon: -122.746 }, '98279': { lat: 48.657, lon: -122.808 },
-  '98280': { lat: 48.563, lon: -122.906 }, '98281': { lat: 48.983, lon: -123.061 },
-  '98282': { lat: 48.234, lon: -122.384 }, '98283': { lat: 48.743, lon: -121.066 },
-  '98284': { lat: 48.519, lon: -122.221 }, '98286': { lat: 48.604, lon: -123.054 },
-  '98290': { lat: 47.826, lon: -122.017 }, '98292': { lat: 48.099, lon: -122.346 },
-  '98294': { lat: 47.811, lon: -121.958 }, '98295': { lat: 48.983, lon: -122.378 },
-};
-
-function getZipCoords(zip) {
-  if (ZIP_COORDS[zip]) return ZIP_COORDS[zip];
-  const z = parseInt(zip);
-  if (z >= 98000 && z <= 98300) {
-    const frac = (z - 98000) / 300;
-    return { lat: 47.5 + frac * 1.5, lon: -122.5 + frac * 0.3 };
-  }
-  return null;
-}
-
-function validatePhone(phone) {
-  return /^[\+\d\s\-\(\)]{10,15}$/.test(phone.replace(/\s/g, ''));
-}
-
-function handleSignup() {
-  const phone = document.getElementById('phone').value.trim();
-  const zip = document.getElementById('zipcode').value.trim();
-  if (!phone || !validatePhone(phone)) {
-    document.getElementById('phone').style.borderColor = '#E24B4A';
-    document.getElementById('phone').focus();
-    return;
-  }
-  if (!zip || zip.length !== 5 || isNaN(zip)) {
-    document.getElementById('zipcode').style.borderColor = '#E24B4A';
-    document.getElementById('zipcode').focus();
-    return;
-  }
-  userZipCoords = getZipCoords(zip);
-  document.getElementById('signup-form').style.display = 'none';
-  document.getElementById('success-state').style.display = 'block';
-  document.getElementById('success-zip').textContent = zip;
-  demoAlertShown = false;
-  renderSightings(allSightings);
-  document.querySelector('.sightings-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-document.getElementById('phone').addEventListener('input', function() { this.style.borderColor = ''; });
-document.getElementById('zipcode').addEventListener('input', function() {
-  this.style.borderColor = '';
-  if (this.value.length === 5 && !isNaN(this.value)) {
-    userZipCoords = getZipCoords(this.value);
-    if (allSightings.length > 0) renderSightings(allSightings);
-  }
-});
-document.getElementById('zipcode').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') handleSignup();
-});
-
-fetchSightings();
-setInterval(fetchSightings, 300000);
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 </script>
+
 </body>
 </html>
