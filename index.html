@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orca Alert — Salish Sea Whale Notifications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0d1f1e;
+    --ink-soft: #3d5554;
+    --ink-muted: #7a9997;
+    --bg: #f4f9f8;
+    --bg-deep: #0d2b28;
+    --surface: #ffffff;
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-mid: #5DCAA5;
+    --teal-dark: #085041;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --border: rgba(13,31,30,0.1);
+    --r: 14px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(13,43,40,0.95);
+    backdrop-filter: blur(12px);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-brand span { font-family: 'Lora', serif; font-size: 1.1rem; color: #fff; font-weight: 500; }
+  .nav-pill {
+    background: rgba(93,202,165,0.15); color: var(--teal-mid);
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px; border: 1px solid rgba(93,202,165,0.3);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    padding: 7rem 2.5rem 4rem;
+    background: linear-gradient(160deg, var(--bg-deep) 0%, #143530 60%, #1a4a43 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero-waves {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 200px; opacity: 0.12;
+  }
+  .hero-glow {
+    position: absolute; width: 600px; height: 600px;
+    border-radius: 50%; background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%);
+    right: -100px; top: 50%; transform: translateY(-50%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 580px; position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(93,202,165,0.12); border: 1px solid rgba(93,202,165,0.25);
+    color: var(--teal-mid); padding: 6px 14px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal-mid); animation: pulse-dot 2s ease-in-out infinite; }
+  @keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.7); } }
+  .hero h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 500; color: #fff; line-height: 1.15;
+    letter-spacing: -0.02em; margin-bottom: 1.25rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--teal-mid); }
+  .hero p { font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.75; font-weight: 300; margin-bottom: 2.5rem; }
+
+  /* SIGNUP FORM */
+  .signup-form {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: var(--r); padding: 1.75rem; max-width: 480px;
+  }
+  .form-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; display: block; }
+  .form-row { margin-bottom: 1rem; }
+  .form-input {
+    width: 100%; padding: 0.75rem 1rem;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 8px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: rgba(255,255,255,0.3); }
+  .form-input:focus { border-color: var(--teal-mid); }
+  .form-hint { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 5px; }
+  .btn-signup {
+    width: 100%; padding: 0.875rem;
+    background: var(--teal); color: #fff;
+    border: none; border-radius: 8px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .btn-signup:hover { background: #1D9E75cc; transform: translateY(-1px); }
+  .btn-signup:active { transform: scale(0.99); }
+  .form-disclaimer { font-size: 0.7rem; color: rgba(255,255,255,0.3); text-align: center; margin-top: 0.75rem; line-height: 1.5; }
+
+  /* SUCCESS STATE */
+  .success-state {
+    display: none;
+    background: rgba(29,158,117,0.12); border: 1px solid rgba(93,202,165,0.3);
+    border-radius: var(--r); padding: 1.75rem; text-align: center;
+  }
+  .success-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .success-state h3 { font-family: 'Lora', serif; color: #fff; font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .success-state p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; }
+
+  /* LIVE SIGHTINGS */
+  .sightings-section { padding: 5rem 2.5rem; max-width: 1100px; margin: 0 auto; }
+  .section-eyebrow {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: pulse-dot 1.5s ease-in-out infinite; }
+  .section-title { font-family: 'Lora', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.015em; }
+  .section-sub { font-size: 0.95rem; color: var(--ink-soft); font-weight: 300; margin-bottom: 2rem; }
+
+  /* FILTER BAR */
+  .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+  .filter-label { font-size: 0.8rem; color: var(--ink-muted); }
+  .filter-btn {
+    padding: 5px 14px; border-radius: 100px; border: 1px solid var(--border);
+    background: var(--surface); font-size: 0.8rem; color: var(--ink-soft);
+    cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover { border-color: var(--teal); color: var(--teal); }
+  .filter-btn.active { background: var(--teal); border-color: var(--teal); color: #fff; }
+
+  /* SIGHTING CARDS */
+  .sightings-grid { display: flex; flex-direction: column; gap: 10px; }
+  .sighting-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--r); padding: 1.25rem 1.5rem;
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 1rem; align-items: start;
+    transition: box-shadow 0.2s;
+    animation: slideIn 0.4s ease both;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .sighting-card:hover { box-shadow: 0 4px 20px rgba(13,31,30,0.07); }
+  .sighting-species-badge {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+  }
+  .species-orca { background: #E1F5EE; }
+  .species-humpback { background: #E6F1FB; }
+  .species-gray { background: #FAEEDA; }
+  .species-minke { background: #FBEAF0; }
+  .species-other { background: #F1EFE8; }
+  .sighting-body {}
+  .sighting-top { display: flex; align-items: center; gap: 8px; margin-bottom: 3px; flex-wrap: wrap; }
+  .sighting-species { font-weight: 500; font-size: 0.95rem; color: var(--ink); }
+  .species-tag {
+    font-size: 0.7rem; padding: 2px 8px; border-radius: 100px; font-weight: 500;
+  }
+  .tag-orca { background: var(--teal-light); color: var(--teal-dark); }
+  .tag-humpback { background: #E6F1FB; color: #0C447C; }
+  .tag-gray { background: var(--amber-light); color: #633806; }
+  .tag-minke { background: #FBEAF0; color: #72243E; }
+  .tag-other { background: #F1EFE8; color: #444441; }
+  .sighting-location { font-size: 0.875rem; color: var(--ink-soft); margin-bottom: 4px; }
+  .sighting-desc { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.5; font-weight: 300; }
+  .sighting-meta { text-align: right; flex-shrink: 0; }
+  .sighting-time { font-size: 0.8rem; color: var(--ink-muted); white-space: nowrap; }
+  .sighting-coords { font-size: 0.7rem; color: var(--ink-muted); font-family: monospace; margin-top: 3px; }
+  .proximity-badge {
+    display: inline-block; margin-top: 6px;
+    font-size: 0.7rem; font-weight: 500; padding: 3px 8px; border-radius: 100px;
+  }
+  .prox-near { background: #FAECE7; color: var(--coral); }
+  .prox-close { background: var(--amber-light); color: var(--amber); }
+  .prox-far { background: var(--teal-light); color: var(--teal-dark); }
+
+  /* LOADING / EMPTY */
+  .loading-state { text-align: center; padding: 3rem; color: var(--ink-muted); }
+  .spinner {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2.5px solid var(--teal-light); border-top-color: var(--teal);
+    animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty-state { text-align: center; padding: 3rem; }
+  .empty-state p { color: var(--ink-muted); font-size: 0.9rem; }
+
+  /* DEMO ALERT */
+  .demo-alert {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+    background: var(--ink); color: #fff;
+    border-radius: var(--r); padding: 1rem 1.25rem; max-width: 300px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    transform: translateY(120px); opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+  }
+  .demo-alert.show { transform: translateY(0); opacity: 1; }
+  .demo-alert-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .demo-alert-icon { font-size: 1.2rem; }
+  .demo-alert-title { font-size: 0.8rem; font-weight: 500; color: var(--teal-mid); }
+  .demo-alert p { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+  .demo-alert-close {
+    position: absolute; top: 10px; right: 10px;
+    background: none; border: none; color: rgba(255,255,255,0.4);
+    cursor: pointer; font-size: 1rem; padding: 2px 6px;
+  }
+
+  /* HOW IT WORKS */
+  .how-section { background: var(--bg-deep); padding: 5rem 2.5rem; }
+  .how-inner { max-width: 900px; margin: 0 auto; }
+  .how-section .section-title { color: #fff; }
+  .how-section .section-sub { color: rgba(255,255,255,0.5); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+  .step {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--r); padding: 1.5rem;
+  }
+  .step-num { font-family: 'Lora', serif; font-size: 2rem; font-style: italic; color: var(--teal-mid); opacity: 0.5; margin-bottom: 0.75rem; }
+  .step h4 { font-size: 0.95rem; font-weight: 500; color: #fff; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.6; font-weight: 300; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg-deep); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 1.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; }
+  footer a:hover { color: var(--teal-mid); }
+
+  /* DEMO MODE BANNER */
+  .demo-banner {
+    background: var(--amber-light); border-bottom: 1px solid rgba(186,117,23,0.2);
+    padding: 8px 2.5rem; display: flex; align-items: center; gap: 8px;
+    font-size: 0.8rem; color: var(--amber);
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 1rem 1.25rem; }
+    .hero { padding: 6rem 1.25rem 3rem; }
+    .sightings-section { padding: 3rem 1.25rem; }
+    .how-section { padding: 3rem 1.25rem; }
+    .sighting-card { grid-template-columns: auto 1fr; }
+    .sighting-meta { grid-column: 2; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DEMO BANNER -->
+<div class="demo-banner" style="margin-top:0; position:fixed; top:0; left:0; right:0; z-index:99;">
+  ⚗️ <strong>Prototype demo</strong> — sightings data is live from The Whale Museum's public API. SMS alerts are simulated.
+</div>
+
+<nav style="top: 34px;">
+  <a href="#" class="nav-brand">
+    <span>🐋 Orca Alert</span>
+  </a>
+  <div class="nav-pill">Salish Sea</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="padding-top: 8rem;">
+  <div class="hero-glow"></div>
+  <svg class="hero-waves" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,100 C180,160 360,40 540,100 C720,160 900,40 1080,100 C1260,160 1380,80 1440,100 L1440,200 L0,200 Z" fill="white"/>
+    <path d="M0,140 C200,80 400,180 600,140 C800,100 1000,180 1200,140 C1320,120 1400,150 1440,140 L1440,200 L0,200 Z" fill="white" opacity="0.5"/>
+  </svg>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Whale watch alerts — Salish Sea
+    </div>
+    <h1>Know when the <em>orcas</em> are near.</h1>
+    <p>Get a text message the moment whales are spotted within 5 miles of you in the Salish Sea. Powered by real-time community sightings — rebuilt after the original service went offline.</p>
+
+    <!-- SIGNUP FORM -->
+    <div id="signup-form" class="signup-form">
+      <div class="form-row">
+        <label class="form-label" for="phone">Your phone number</label>
+        <input class="form-input" type="tel" id="phone" placeholder="+1 (206) 555-0100" autocomplete="tel">
+        <div class="form-hint">US numbers only for now. Standard SMS rates apply.</div>
+      </div>
+      <div class="form-row">
+        <label class="form-label" for="zipcode">Your zip code</label>
+        <input class="form-input" type="text" id="zipcode" placeholder="98115" maxlength="5" autocomplete="postal-code">
+        <div class="form-hint">We'll alert you when whales are within ~5 miles of this location.</div>
+      </div>
+      <button class="btn-signup" onclick="handleSignup()">
+        🐋 Sign me up for whale alerts
+      </button>
+      <p class="form-disclaimer">No spam. Only whale alerts. Unsubscribe any time by replying STOP.</p>
+    </div>
+
+    <!-- SUCCESS STATE -->
+    <div id="success-state" class="success-state">
+      <div class="success-icon">🎉</div>
+      <h3>You're on the list!</h3>
+      <p>We'll text you the moment orcas or other whales are spotted near <span id="success-zip"></span>. Keep an eye out — they could show up any day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE SIGHTINGS -->
+<section class="sightings-section">
+  <div class="section-eyebrow"><span class="live-dot"></span> Live from The Whale Museum</div>
+  <h2 class="section-title">Recent sightings</h2>
+  <p class="section-sub">Confirmed sightings in the Salish Sea region, updated continuously. Enter your zip above to see proximity alerts.</p>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterSightings('all', this)">All species</button>
+    <button class="filter-btn" onclick="filterSightings('orca', this)">Orca</button>
+    <button class="filter-btn" onclick="filterSightings('humpback', this)">Humpback</button>
+    <button class="filter-btn" onclick="filterSightings('gray whale', this)">Gray whale</button>
+  </div>
+
+  <div id="sightings-container">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading recent sightings...</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <div class="section-eyebrow" style="color: var(--teal-mid);">How it works</div>
+    <h2 class="section-title">Simple, real, and free.</h2>
+    <p class="section-sub">Built on top of The Whale Museum's community sighting network — thousands of volunteers, researchers, and ferry crews reporting from the water.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>You sign up</h4>
+        <p>Enter your phone number and zip code. We convert your zip to lat/lon coordinates.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Whales are spotted</h4>
+        <p>Community members report sightings via The Whale Museum. Reports are verified and geotagged.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>We calculate distance</h4>
+        <p>We check if the sighting is within 5 miles of your zip — laterally along the same latitude band.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>You get a text</h4>
+        <p>Instant SMS with species, location, and direction of travel. No app needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>🐋 Orca Alert — A project by Lynell Cunningham</p>
+  <div style="display:flex; gap:1.5rem;">
+    <a href="https://www.orcanetwork.org" target="_blank">Orca Network</a>
+    <a href="http://hotline.whalemuseum.org" target="_blank">The Whale Museum</a>
+    <a href="https://www.orcanetwork.org/report-sightings" target="_blank">Report a sighting</a>
+  </div>
+  <p>Sighting data © The Whale Museum</p>
+</footer>
+
+<!-- DEMO SMS ALERT -->
+<div class="demo-alert" id="demo-alert">
+  <button class="demo-alert-close" onclick="closeDemoAlert()">✕</button>
+  <div class="demo-alert-top">
+    <span class="demo-alert-icon">📱</span>
+    <span class="demo-alert-title">Demo SMS Alert</span>
+  </div>
+  <p id="demo-alert-text">🐋 ORCA ALERT: Orcas spotted 3.2 miles from your location near Point No Point. Northbound. — OrcaAlert.org</p>
+</div>
+
+<script>
+const SALISH_SEA_BOUNDS = { minLat: 47.5, maxLat: 49.0, minLon: -124.0, maxLon: -122.0 };
+let allSightings = [];
+let userZipCoords = null;
+let currentFilter = 'all';
+
+const SPECIES_CONFIG = {
+  'orca': { emoji: '🐋', badgeClass: 'species-orca', tagClass: 'tag-orca', label: 'Orca' },
+  'humpback': { emoji: '🐳', badgeClass: 'species-humpback', tagClass: 'tag-humpback', label: 'Humpback' },
+  'gray whale': { emoji: '🐬', badgeClass: 'species-gray', tagClass: 'tag-gray', label: 'Gray whale' },
+  'minke': { emoji: '🌊', badgeClass: 'species-minke', tagClass: 'tag-minke', label: 'Minke' },
+};
+
+function getSpeciesConfig(species) {
+  const s = (species || '').toLowerCase();
+  for (const [key, cfg] of Object.entries(SPECIES_CONFIG)) {
+    if (s.includes(key)) return { ...cfg, key };
+  }
+  return { emoji: '🌊', badgeClass: 'species-other', tagClass: 'tag-other', label: species || 'Marine mammal', key: 'other' };
+}
+
+function haversineDistance(lat1, lon1, lat2, lon2) {
+  const R = 3958.8;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+function lateralDistance(userLat, sightingLat) {
+  return Math.abs(userLat - sightingLat) * 69;
+}
+
+function timeAgo(dateStr) {
+  const d = new Date(dateStr);
+  if (isNaN(d)) return 'Recently';
+  const diff = (Date.now() - d) / 1000;
+  if (diff < 3600) return `${Math.round(diff/60)}m ago`;
+  if (diff < 86400) return `${Math.round(diff/3600)}h ago`;
+  if (diff < 604800) return `${Math.round(diff/86400)}d ago`;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function proximityBadge(dist) {
+  if (dist <= 5) return `<span class="proximity-badge prox-near">🔴 ${dist.toFixed(1)} mi — Alert zone</span>`;
+  if (dist <= 15) return `<span class="proximity-badge prox-close">🟡 ${dist.toFixed(1)} mi — Nearby</span>`;
+  return `<span class="proximity-badge prox-far">🟢 ${dist.toFixed(1)} mi</span>`;
+}
+
+function renderSightings(sightings) {
+  const container = document.getElementById('sightings-container');
+  const filtered = currentFilter === 'all'
+    ? sightings
+    : sightings.filter(s => (s.species || '').toLowerCase().includes(currentFilter));
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><p>No ${currentFilter === 'all' ? '' : currentFilter + ' '}sightings found in this region recently.</p></div>`;
+    return;
+  }
+
+  container.innerHTML = `<div class="sightings-grid">${filtered.map((s, i) => {
+    const cfg = getSpeciesConfig(s.species);
+    const lat = parseFloat(s.latitude);
+    const lon = parseFloat(s.longitude);
+    const hasCoords = !isNaN(lat) && !isNaN(lon);
+    let proxHtml = '';
+    if (userZipCoords && hasCoords) {
+      const latDist = lateralDistance(userZipCoords.lat, lat);
+      proxHtml = proximityBadge(latDist);
+      if (latDist <= 5 && i < 3) triggerDemoAlert(s, latDist);
+    }
+    return `
+    <div class="sighting-card" style="animation-delay: ${i * 50}ms">
+      <div class="sighting-species-badge ${cfg.badgeClass}">${cfg.emoji}</div>
+      <div class="sighting-body">
+        <div class="sighting-top">
+          <span class="sighting-species">${cfg.label}</span>
+          <span class="species-tag ${cfg.tagClass}">${s.species || 'Unknown'}</span>
+        </div>
+        <div class="sighting-location">📍 ${s.location || s.description?.substring(0,60) || 'Salish Sea region'}</div>
+        ${s.description ? `<div class="sighting-desc">${s.description.substring(0,120)}${s.description.length > 120 ? '…' : ''}</div>` : ''}
+        ${proxHtml}
+      </div>
+      <div class="sighting-meta">
+        <div class="sighting-time">${timeAgo(s.created_at || s.sighted_at)}</div>
+        ${hasCoords ? `<div class="sighting-coords">${lat.toFixed(3)}°N ${Math.abs(lon).toFixed(3)}°W</div>` : ''}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+let demoAlertShown = false;
+function triggerDemoAlert(sighting, dist) {
+  if (demoAlertShown) return;
+  demoAlertShown = true;
+  const cfg = getSpeciesConfig(sighting.species);
+  const loc = sighting.location || 'the Salish Sea';
+  document.getElementById('demo-alert-text').textContent =
+    `${cfg.emoji} ORCA ALERT: ${cfg.label} spotted ${dist.toFixed(1)} mi from your location near ${loc}. — OrcaAlert.org`;
+  setTimeout(() => document.getElementById('demo-alert').classList.add('show'), 1500);
+  setTimeout(() => document.getElementById('demo-alert').classList.remove('show'), 8000);
+}
+
+function closeDemoAlert() {
+  document.getElementById('demo-alert').classList.remove('show');
+}
+
+async function fetchSightings() {
+  const container = document.getElementById('sightings-container');
+  try {
+    const params = new URLSearchParams({ species: 'orca,humpback,gray whale,minke', limit: 20, since: getSinceDate() });
+    const res = await fetch(`https://hotline.whalemuseum.org/api.json?${params}`);
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    allSightings = data.filter(s => {
+      const lat = parseFloat(s.latitude);
+      const lon = parseFloat(s.longitude);
+      return !isNaN(lat) && !isNaN(lon)
+        && lat >= SALISH_SEA_BOUNDS.minLat && lat <= SALISH_SEA_BOUNDS.maxLat
+        && lon >= SALISH_SEA_BOUNDS.minLon && lon <= SALISH_SEA_BOUNDS.maxLon;
+    });
+    if (allSightings.length === 0) {
+      const res2 = await fetch('https://hotline.whalemuseum.org/api.json?limit=30');
+      const data2 = await res2.json();
+      allSightings = data2.slice(0, 20);
+    }
+    renderSightings(allSightings);
+  } catch(e) {
+    container.innerHTML = `<div class="empty-state"><p style="color:var(--ink-muted)">Couldn't reach The Whale Museum API right now. <a href="http://hotline.whalemuseum.org" target="_blank" style="color:var(--teal)">View sightings directly →</a></p></div>`;
+  }
+}
+
+function getSinceDate() {
+  const d = new Date();
+  d.setDate(d.getDate() - 30);
+  return d.toISOString().split('T')[0];
+}
+
+function filterSightings(species, btn) {
+  currentFilter = species;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSightings(allSightings);
+}
+
+const ZIP_COORDS = {
+  '98101': { lat: 47.608, lon: -122.335 }, '98102': { lat: 47.632, lon: -122.321 },
+  '98103': { lat: 47.660, lon: -122.342 }, '98104': { lat: 47.603, lon: -122.330 },
+  '98105': { lat: 47.661, lon: -122.300 }, '98106': { lat: 47.545, lon: -122.357 },
+  '98107': { lat: 47.668, lon: -122.374 }, '98108': { lat: 47.546, lon: -122.307 },
+  '98109': { lat: 47.638, lon: -122.357 }, '98110': { lat: 47.631, lon: -122.523 },
+  '98111': { lat: 47.606, lon: -122.334 }, '98112': { lat: 47.633, lon: -122.294 },
+  '98113': { lat: 47.669, lon: -122.370 }, '98114': { lat: 47.606, lon: -122.334 },
+  '98115': { lat: 47.685, lon: -122.294 }, '98116': { lat: 47.572, lon: -122.393 },
+  '98117': { lat: 47.686, lon: -122.370 }, '98118': { lat: 47.549, lon: -122.277 },
+  '98119': { lat: 47.640, lon: -122.376 }, '98121': { lat: 47.615, lon: -122.347 },
+  '98122': { lat: 47.609, lon: -122.303 }, '98125': { lat: 47.716, lon: -122.304 },
+  '98126': { lat: 47.557, lon: -122.375 }, '98133': { lat: 47.732, lon: -122.347 },
+  '98134': { lat: 47.579, lon: -122.342 }, '98136': { lat: 47.540, lon: -122.389 },
+  '98144': { lat: 47.590, lon: -122.294 }, '98146': { lat: 47.511, lon: -122.364 },
+  '98155': { lat: 47.752, lon: -122.305 }, '98166': { lat: 47.450, lon: -122.348 },
+  '98177': { lat: 47.761, lon: -122.380 }, '98199': { lat: 47.650, lon: -122.399 },
+  '98225': { lat: 48.734, lon: -122.480 }, '98226': { lat: 48.762, lon: -122.439 },
+  '98229': { lat: 48.705, lon: -122.465 }, '98230': { lat: 48.985, lon: -122.738 },
+  '98232': { lat: 48.498, lon: -122.483 }, '98233': { lat: 48.524, lon: -122.337 },
+  '98236': { lat: 47.975, lon: -122.447 }, '98239': { lat: 48.246, lon: -122.697 },
+  '98240': { lat: 48.945, lon: -122.635 }, '98245': { lat: 48.637, lon: -122.962 },
+  '98250': { lat: 48.544, lon: -123.005 }, '98253': { lat: 47.975, lon: -122.447 },
+  '98257': { lat: 48.416, lon: -122.609 }, '98260': { lat: 47.993, lon: -122.362 },
+  '98261': { lat: 48.498, lon: -122.904 }, '98262': { lat: 48.715, lon: -122.595 },
+  '98263': { lat: 48.489, lon: -121.985 }, '98267': { lat: 48.502, lon: -121.177 },
+  '98270': { lat: 47.848, lon: -122.104 }, '98271': { lat: 48.057, lon: -122.153 },
+  '98273': { lat: 48.423, lon: -122.338 }, '98274': { lat: 48.456, lon: -122.303 },
+  '98275': { lat: 47.854, lon: -122.311 }, '98277': { lat: 48.326, lon: -122.653 },
+  '98278': { lat: 48.388, lon: -122.746 }, '98279': { lat: 48.657, lon: -122.808 },
+  '98280': { lat: 48.563, lon: -122.906 }, '98281': { lat: 48.983, lon: -123.061 },
+  '98282': { lat: 48.234, lon: -122.384 }, '98283': { lat: 48.743, lon: -121.066 },
+  '98284': { lat: 48.519, lon: -122.221 }, '98286': { lat: 48.604, lon: -123.054 },
+  '98290': { lat: 47.826, lon: -122.017 }, '98292': { lat: 48.099, lon: -122.346 },
+  '98294': { lat: 47.811, lon: -121.958 }, '98295': { lat: 48.983, lon: -122.378 },
+};
+
+function getZipCoords(zip) {
+  if (ZIP_COORDS[zip]) return ZIP_COORDS[zip];
+  const z = parseInt(zip);
+  if (z >= 98000 && z <= 98300) {
+    const frac = (z - 98000) / 300;
+    return { lat: 47.5 + frac * 1.5, lon: -122.5 + frac * 0.3 };
+  }
+  return null;
+}
+
+function validatePhone(phone) {
+  return /^[\+\d\s\-\(\)]{10,15}$/.test(phone.replace(/\s/g, ''));
+}
+
+function handleSignup() {
+  const phone = document.getElementById('phone').value.trim();
+  const zip = document.getElementById('zipcode').value.trim();
+  if (!phone || !validatePhone(phone)) {
+    document.getElementById('phone').style.borderColor = '#E24B4A';
+    document.getElementById('phone').focus();
+    return;
+  }
+  if (!zip || zip.length !== 5 || isNaN(zip)) {
+    document.getElementById('zipcode').style.borderColor = '#E24B4A';
+    document.getElementById('zipcode').focus();
+    return;
+  }
+  userZipCoords = getZipCoords(zip);
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('success-state').style.display = 'block';
+  document.getElementById('success-zip').textContent = zip;
+  demoAlertShown = false;
+  renderSightings(allSightings);
+  document.querySelector('.sightings-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.getElementById('phone').addEventListener('input', function() { this.style.borderColor = ''; });
+document.getElementById('zipcode').addEventListener('input', function() {
+  this.style.borderColor = '';
+  if (this.value.length === 5 && !isNaN(this.value)) {
+    userZipCoords = getZipCoords(this.value);
+    if (allSightings.length > 0) renderSightings(allSightings);
+  }
+});
+document.getElementById('zipcode').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleSignup();
+});
+
+fetchSightings();
+setInterval(fetchSightings, 300000);
+</script>
+</body>
+</html>
